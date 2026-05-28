@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product card</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        min-height: 100vh;
+        background: #f6f7fb;
+        color: #172033;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .main {
+        width:100% ;
+        margin: 0 auto;
+        padding: 24px 0 48px;
+    }
+
+    .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 16px 20px;
+        margin-bottom: 42px;
+        background: #ffffff;
+        border: 1px solid #e5e7ef;
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(22, 31, 51, 0.06);
+    }
+
+    .navbar h1 {
+        font-size: 1.35rem;
+        letter-spacing: 0;
+    }
+
+    .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        list-style: none;
+    }
+
+    .nav-links a {
+        display: inline-block;
+        padding: 9px 12px;
+        color: #5f687a;
+        text-decoration: none;
+        font-size: 0.95rem;
+        border-radius: 6px;
+        transition: color 0.2s ease, background 0.2s ease;
+    }
+
+    .nav-links a:hover {
+        color: #101828;
+        background: #f0f2f6;
+    }
+
+    .content {
+        margin-bottom: 24px;
+    }
+
+    .content h1 {
+        font-size: clamp(2rem, 5vw, 3.8rem);
+        line-height: 1.05;
+        margin-bottom: 10px;
+        color: #111827;
+    }
+
+    .content p {
+        max-width: 560px;
+        color: #667085;
+        font-size: 1.08rem;
+        line-height: 1.6;
+    }
+
+    .products {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 24px;
+    }
+
+    .card {
+        overflow: hidden;
+        background: #ffffff;
+        border: 1px solid #e6e8ef;
+        border-radius: 0px 20px 20px 20px;
+        box-shadow: 0 14px 34px rgba(22, 31, 51, 0.08);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 22px 46px rgba(22, 31, 51, 0.13);
+    }
+
+    .card img {
+        display: block;
+        width: 100%;
+        height: 350px;
+        object-fit: cover;
+        background: #e9ecf2;
+    }
+
+    .card-content {
+        padding: 20px;
+    }
+
+    .card-title {
+        margin-bottom: 8px;
+        font-size: 1.25rem;
+        color: #111827;
+    }
+
+    .card-text {
+        margin-bottom: 18px;
+        color: #667085;
+        line-height: 1.5;
+    }
+
+    .button {
+        width: 100%;
+        border: 0;
+        border-radius: 6px;
+        padding: 12px 16px;
+        background: #111827;
+        color: #ffffff;
+        font-size: 0.95rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .button:hover {
+        background: #2f6fed;
+        transform: translateY(-1px);
+    }
+
+    .button:active {
+        transform: translateY(0);
+    }
+
+    @media (max-width: 640px) {
+        .main {
+            width: min(100% - 24px, 1120px);
+            padding-top: 12px;
+        }
+
+        .navbar {
+            align-items: flex-start;
+            flex-direction: column;
+            margin-bottom: 32px;
+        }
+
+        .nav-links {
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .nav-links a {
+            padding-inline: 8px;
+        }
+
+        .card img {
+            height: 350px;
+        }
+    }
+</style>
+</head>
+
+<body>
+    <div class="main">
+
+
+        <div class="navbar">
+            <h1>My Store</h1>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <h1>Welcome to My Store</h1>
+            <p>Discover our amazing products!</p>
+        </div>
+        <div class="products">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1651828855150-ba40f6870a53?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Z2lybHMlMjBjbG90aGVzfGVufDB8fDB8fHww"
+                    alt="Clothing product">
+                <div class="card-content">
+                    <h2 class="card-title">Product Name</h2>
+                    <p class="card-text">Product description goes here.</p>
+                    <button class="button">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1651743679361-201259835e44?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Z2lybHMlMjBjbG90aGVzfGVufDB8fDB8fHww"
+                    alt="Clothing product">
+                <div class="card-content">
+                    <h2 class="card-title">Product Name</h2>
+                    <p class="card-text">Product description goes here.</p>
+                    <button class="button">Add to Cart</button>
+                </div>
+            </div>
+
+             <div class="card">
+                <img src="https://images.unsplash.com/photo-1651828855150-ba40f6870a53?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Z2lybHMlMjBjbG90aGVzfGVufDB8fDB8fHww"
+                    alt="Clothing product">
+                <div class="card-content">
+                    <h2 class="card-title">Product Name</h2>
+                    <p class="card-text">Product description goes here.</p>
+                    <button class="button">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1651743679361-201259835e44?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Z2lybHMlMjBjbG90aGVzfGVufDB8fDB8fHww"
+                    alt="Clothing product">
+                <div class="card-content">
+                    <h2 class="card-title">Product Name</h2>
+                    <p class="card-text">Product description goes here.</p>
+                    <button class="button">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

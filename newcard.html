@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Anime 3D Card</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #020510;
+      font-family: 'Rajdhani', sans-serif;
+      overflow: hidden;
+    }
+
+    /* Animated grid background */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,200,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,200,255,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: gridShift 20s linear infinite;
+    }
+
+    @keyframes gridShift {
+      0%   { transform: perspective(500px) rotateX(15deg) translateY(0); }
+      100% { transform: perspective(500px) rotateX(15deg) translateY(40px); }
+    }
+
+    /* Ambient orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      animation: orbFloat 8s ease-in-out infinite alternate;
+    }
+    .orb-1 { width: 400px; height: 400px; background: rgba(120,0,255,0.18); top: -100px; left: -100px; animation-delay: 0s; }
+    .orb-2 { width: 350px; height: 350px; background: rgba(0,200,255,0.15); bottom: -80px; right: -80px; animation-delay: -3s; }
+    .orb-3 { width: 250px; height: 250px; background: rgba(255,50,150,0.12); bottom: 30%; left: 10%; animation-delay: -5s; }
+
+    @keyframes orbFloat {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(30px, 20px) scale(1.1); }
+    }
+
+    /* Scanlines overlay */
+    .scanlines {
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.08) 2px,
+        rgba(0,0,0,0.08) 4px
+      );
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    /* Scene container */
+    .scene {
+      perspective: 1000px;
+      width: 340px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Floating particles */
+    .particles { position: fixed; inset: 0; pointer-events: none; z-index: 5; }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      animation: particleDrift linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes particleDrift {
+      0%   { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 0.6; }
+      100% { transform: translateY(-10vh) translateX(calc(var(--drift) * 1px)) scale(1); opacity: 0; }
+    }
+
+    /* Card wrapper */
+    .card-wrapper {
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.1s ease-out;
+      animation: cardEntrance 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+      opacity: 0;
+    }
+
+    @keyframes cardEntrance {
+      0%   { opacity: 0; transform: perspective(1000px) rotateY(-90deg) scale(0.5); }
+      60%  { opacity: 1; transform: perspective(1000px) rotateY(10deg) scale(1.03); }
+      80%  { transform: perspective(1000px) rotateY(-5deg) scale(0.99); }
+      100% { opacity: 1; transform: perspective(1000px) rotateY(0deg) scale(1); }
+    }
+
+    /* The card itself */
+    .card {
+      width: 340px;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(145deg, #0d1b2e 0%, #0a0f1e 60%, #0d1535 100%);
+      border: 1px solid rgba(0,200,255,0.3);
+      box-shadow:
+        0 0 0 1px rgba(120,0,255,0.2),
+        0 0 30px rgba(0,200,255,0.15),
+        0 0 60px rgba(120,0,255,0.1),
+        0 30px 60px rgba(0,0,0,0.7),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+      transform-style: preserve-3d;
+      cursor: none;
+      animation: borderPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes borderPulse {
+      0%, 100% { box-shadow: 0 0 0 1px rgba(120,0,255,0.2), 0 0 30px rgba(0,200,255,0.15), 0 0 60px rgba(120,0,255,0.1), 0 30px 60px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08); }
+      50%       { box-shadow: 0 0 0 1px rgba(0,200,255,0.5), 0 0 40px rgba(0,200,255,0.3), 0 0 80px rgba(120,0,255,0.25), 0 30px 60px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.1); }
+    }
+
+    /* Corner decorations */
+    .corner {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      z-index: 10;
+    }
+    .corner::before, .corner::after { content: ''; position: absolute; background: #00c8ff; }
+    .corner::before { width: 2px; height: 100%; }
+    .corner::after  { width: 100%; height: 2px; }
+    .corner-tl { top: 12px; left: 12px; }
+    .corner-tr { top: 12px; right: 12px; transform: scaleX(-1); }
+    .corner-bl { bottom: 12px; left: 12px; transform: scaleY(-1); }
+    .corner-br { bottom: 12px; right: 12px; transform: scale(-1); }
+
+    /* Holographic shimmer */
+    .holo-shimmer {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        125deg,
+        transparent 0%,
+        rgba(255,255,255,0.03) 30%,
+        rgba(0,200,255,0.08) 40%,
+        rgba(120,0,255,0.06) 50%,
+        rgba(255,50,150,0.05) 60%,
+        rgba(255,255,255,0.03) 70%,
+        transparent 100%
+      );
+      background-size: 300% 300%;
+      animation: holoShift 5s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 6;
+      mix-blend-mode: screen;
+    }
+
+    @keyframes holoShift {
+      0%   { background-position: 0% 0%; }
+      50%  { background-position: 100% 100%; }
+      100% { background-position: 0% 0%; }
+    }
+
+    /* Image area */
+    .card-img-wrap {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+      filter: saturate(1.2) contrast(1.05);
+    }
+
+    .card:hover .card-img-wrap img {
+      transform: scale(1.08);
+    }
+
+    /* Image overlay */
+    .img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, rgba(10,15,30,0.95) 100%);
+    }
+
+    /* Anime speed lines on image */
+    .speed-lines {
+      position: absolute;
+      inset: 0;
+      background: repeating-conic-gradient(
+        from 0deg at 50% 50%,
+        rgba(0,200,255,0.04) 0deg,
+        transparent 1deg,
+        transparent 5deg,
+        rgba(120,0,255,0.03) 6deg,
+        transparent 7deg,
+        transparent 10deg
+      );
+      animation: speedSpin 20s linear infinite;
+      mix-blend-mode: screen;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .card:hover .speed-lines { opacity: 1; }
+
+    @keyframes speedSpin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* Energy bar at top of image */
+    .energy-bar {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #7800ff, #00c8ff, #ff3296, #00c8ff, #7800ff);
+      background-size: 300%;
+      animation: energyFlow 2s linear infinite;
+    }
+
+    @keyframes energyFlow {
+      from { background-position: 0%; }
+      to   { background-position: 300%; }
+    }
+
+    /* HUD badge on image */
+    .hud-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(0,200,255,0.1);
+      border: 1px solid rgba(0,200,255,0.5);
+      border-radius: 4px;
+      padding: 4px 10px;
+      font-family: 'Orbitron', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: #00c8ff;
+      text-transform: uppercase;
+      animation: hudBlink 3s ease-in-out infinite;
+      backdrop-filter: blur(4px);
+    }
+
+    @keyframes hudBlink {
+      0%, 90%, 100% { opacity: 1; }
+      95% { opacity: 0.3; }
+    }
+
+    /* Floating stat chips on image */
+    .stat-chip {
+      position: absolute;
+      bottom: 14px;
+      background: rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 30px;
+      padding: 4px 12px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.7);
+      font-family: 'Rajdhani', sans-serif;
+      letter-spacing: 1px;
+      backdrop-filter: blur(8px);
+    }
+
+    .stat-chip.left  { left: 14px; }
+    .stat-chip.right { right: 14px; color: #a78bfa; border-color: rgba(120,0,255,0.3); }
+
+    /* Card content area */
+    .card-content {
+      padding: 22px 22px 24px;
+      position: relative;
+    }
+
+    /* Title */
+    .card-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .card-title::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: -4px;
+      height: 1px;
+      background: linear-gradient(90deg, #00c8ff, #7800ff, transparent);
+    }
+
+    /* Subtitle line */
+    .card-subtitle {
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: #00c8ff;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      margin-top: 10px;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 500;
+    }
+
+    /* Card text */
+    .card-text {
+      font-size: 14px;
+      line-height: 1.65;
+      color: rgba(180,200,230,0.8);
+      margin-bottom: 20px;
+    }
+
+    /* Stats row */
+    .stats-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .stat-box {
+      flex: 1;
+      background: rgba(0,200,255,0.05);
+      border: 1px solid rgba(0,200,255,0.15);
+      border-radius: 8px;
+      padding: 10px 8px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .stat-box:hover {
+      border-color: rgba(0,200,255,0.4);
+      background: rgba(0,200,255,0.1);
+    }
+
+    .stat-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #00c8ff, transparent);
+      animation: scanLine 3s ease-in-out infinite;
+      animation-delay: var(--d, 0s);
+    }
+
+    @keyframes scanLine {
+      0%   { transform: translateX(-100%); opacity: 0; }
+      30%  { opacity: 1; }
+      70%  { opacity: 1; }
+      100% { transform: translateX(100%); opacity: 0; }
+    }
+
+    .stat-val {
+      font-family: 'Orbitron', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      display: block;
+    }
+
+    .stat-lbl {
+      font-size: 10px;
+      color: rgba(0,200,255,0.7);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* Button */
+    .button {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(90deg, rgba(0,200,255,0.15), rgba(120,0,255,0.15));
+      border: 1px solid rgba(0,200,255,0.4);
+      border-radius: 8px;
+      color: #fff;
+      font-family: 'Orbitron', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+    }
+
+    .button::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%; bottom: 0;
+      width: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0,200,255,0.3), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .button:hover { border-color: #00c8ff; box-shadow: 0 0 20px rgba(0,200,255,0.3), inset 0 0 20px rgba(0,200,255,0.05); color: #00c8ff; }
+    .button:hover::before { left: 100%; }
+    .button:active { transform: scale(0.98); }
+
+    /* Button icon dots */
+    .button-dots {
+      display: inline-flex;
+      gap: 4px;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
+    .button-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #00c8ff;
+      animation: dotPulse 1.5s ease-in-out infinite;
+    }
+
+    .button-dot:nth-child(2) { animation-delay: 0.2s; background: #7800ff; }
+    .button-dot:nth-child(3) { animation-delay: 0.4s; background: #ff3296; }
+
+    @keyframes dotPulse {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50%       { transform: scale(1.4); opacity: 1; }
+    }
+
+    /* Custom cursor */
+    .cursor {
+      width: 12px; height: 12px;
+      border: 2px solid #00c8ff;
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.1s ease, width 0.2s, height 0.2s, border-color 0.2s;
+      transform: translate(-50%, -50%);
+    }
+
+    .cursor-trail {
+      width: 4px; height: 4px;
+      background: #7800ff;
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      opacity: 0.6;
+      transition: left 0.15s ease, top 0.15s ease;
+    }
+
+    /* Ripple overlay on click */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      animation: rippleOut 0.6s ease-out forwards;
+      pointer-events: none;
+      background: radial-gradient(circle, rgba(0,200,255,0.4), transparent 70%);
+      z-index: 20;
+    }
+
+    @keyframes rippleOut {
+      to { transform: scale(4); opacity: 0; }
+    }
+
+    /* Glitch effect text */
+    .card-title {
+      animation: none;
+    }
+    .card-title.glitch {
+      animation: glitch 0.3s ease;
+    }
+
+    @keyframes glitch {
+      0%   { text-shadow: none; transform: translate(0); }
+      20%  { text-shadow: -2px 0 #ff3296, 2px 0 #00c8ff; transform: translate(2px, 0); }
+      40%  { text-shadow: 2px 0 #ff3296, -2px 0 #00c8ff; transform: translate(-2px, 0); }
+      60%  { text-shadow: -2px 0 #7800ff, 2px 0 #ff3296; transform: translate(1px, 0); }
+      80%  { text-shadow: 1px 0 #00c8ff, -1px 0 #7800ff; transform: translate(0); }
+      100% { text-shadow: none; transform: translate(0); }
+    }
+
+    /* Floating label */
+    .float-label {
+      position: absolute;
+      bottom: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: rgba(0,200,255,0.4);
+      text-transform: uppercase;
+      animation: labelFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes labelFloat {
+      0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.4; }
+      50%       { transform: translateX(-50%) translateY(-4px); opacity: 0.8; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+<div class="scanlines"></div>
+<div class="particles" id="particles"></div>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+
+<div class="scene">
+  <div class="card-wrapper" id="cardWrapper">
+    <div class="card" id="card">
+
+      <!-- Corner accents -->
+      <div class="corner corner-tl"></div>
+      <div class="corner corner-tr"></div>
+      <div class="corner corner-bl"></div>
+      <div class="corner corner-br"></div>
+
+      <!-- Holographic overlay -->
+      <div class="holo-shimmer"></div>
+
+      <!-- Image section -->
+      <div class="card-img-wrap">
+        <div class="energy-bar"></div>
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Landscape"/>
+        <div class="img-overlay"></div>
+        <div class="speed-lines"></div>
+        <div class="hud-badge">ACTIVE ●</div>
+        <div class="stat-chip left">⬡ ZONE A-7</div>
+        <div class="stat-chip right">∞ LEVEL MAX</div>
+      </div>
+
+      <!-- Content section -->
+      <div class="card-content">
+        <div class="card-subtitle">// Nature Explorer</div>
+        <h2 class="card-title" id="cardTitle">Beautiful Landscape</h2>
+
+        <p class="card-text">
+          Explore the wonders of nature with this stunning landscape. Unlock the power of the world beyond the horizon — where legends are forged.
+        </p>
+
+        <div class="stats-row">
+          <div class="stat-box" style="--d:0s">
+            <span class="stat-val">9.8</span>
+            <span class="stat-lbl">Power</span>
+          </div>
+          <div class="stat-box" style="--d:0.8s">
+            <span class="stat-val">∞</span>
+            <span class="stat-lbl">Range</span>
+          </div>
+          <div class="stat-box" style="--d:1.6s">
+            <span class="stat-val">S+</span>
+            <span class="stat-lbl">Rank</span>
+          </div>
+        </div>
+
+        <button class="button" id="btn" onclick="triggerEffect(event)">
+          <span class="button-dots">
+            <span class="button-dot"></span>
+            <span class="button-dot"></span>
+            <span class="button-dot"></span>
+          </span>
+          Explore Now
+        </button>
+      </div>
+    </div>
+
+    <div class="float-label">HOVER TO ACTIVATE</div>
+  </div>
+</div>
+
+<script>
+  const card    = document.getElementById('card');
+  const wrapper = document.getElementById('cardWrapper');
+  const cursor  = document.getElementById('cursor');
+  const trail   = document.getElementById('cursorTrail');
+  const title   = document.getElementById('cardTitle');
+  const scene   = wrapper.parentElement;
+
+  // Custom cursor
+  let mx = window.innerWidth/2, my = window.innerHeight/2;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top  = my + 'px';
+    setTimeout(() => {
+      trail.style.left = mx + 'px';
+      trail.style.top  = my + 'px';
+    }, 80);
+  });
+
+  // 3D tilt on hover
+  scene.addEventListener('mousemove', e => {
+    const rect = wrapper.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top  + rect.height / 2;
+    const dx = (e.clientX - cx) / (rect.width  / 2);
+    const dy = (e.clientY - cy) / (rect.height / 2);
+    const rotY =  dx * 22;
+    const rotX = -dy * 18;
+
+    wrapper.style.transform = `rotateY(${rotY}deg) rotateX(${rotX}deg)`;
+    card.style.boxShadow = `
+      ${-dx * 30}px ${-dy * 20}px 60px rgba(0,200,255,0.2),
+      ${-dx * 15}px ${-dy * 10}px 30px rgba(120,0,255,0.15),
+      0 30px 60px rgba(0,0,0,0.7),
+      inset 0 1px 0 rgba(255,255,255,0.08)
+    `;
+
+    cursor.style.width  = '20px';
+    cursor.style.height = '20px';
+    cursor.style.borderColor = '#ff3296';
+  });
+
+  scene.addEventListener('mouseleave', () => {
+    wrapper.style.transform = 'rotateY(0deg) rotateX(0deg)';
+    card.style.boxShadow = '';
+    cursor.style.width  = '12px';
+    cursor.style.height = '12px';
+    cursor.style.borderColor = '#00c8ff';
+  });
+
+  // Glitch on hover
+  scene.addEventListener('mouseenter', () => {
+    title.classList.remove('glitch');
+    void title.offsetWidth;
+    title.classList.add('glitch');
+    setTimeout(() => title.classList.remove('glitch'), 400);
+  });
+
+  // Ripple + explosion on button click
+  function triggerEffect(e) {
+    const btn = document.getElementById('btn');
+    const rect = btn.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    ripple.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size/2}px;top:${e.clientY - rect.top - size/2}px`;
+    btn.appendChild(ripple);
+    ripple.addEventListener('animationend', () => ripple.remove());
+
+    // Burst particles from button
+    burstParticles(e.clientX, e.clientY, 20);
+
+    // Glitch title
+    title.classList.remove('glitch');
+    void title.offsetWidth;
+    title.classList.add('glitch');
+  }
+
+  function burstParticles(x, y, count) {
+    for (let i = 0; i < count; i++) {
+      const p = document.createElement('div');
+      const angle = (i / count) * Math.PI * 2;
+      const speed = 60 + Math.random() * 80;
+      const size  = 3 + Math.random() * 5;
+      const colors = ['#00c8ff','#7800ff','#ff3296','#ffffff'];
+      const color  = colors[Math.floor(Math.random() * colors.length)];
+      p.style.cssText = `
+        position:fixed;width:${size}px;height:${size}px;
+        left:${x}px;top:${y}px;
+        background:${color};border-radius:50%;
+        pointer-events:none;z-index:9999;
+        transition: transform ${0.4 + Math.random()*0.4}s ease-out, opacity ${0.4 + Math.random()*0.4}s ease-out;
+        transform: translate(-50%,-50%);
+        opacity:1;
+      `;
+      document.body.appendChild(p);
+      requestAnimationFrame(() => {
+        p.style.transform = `translate(calc(-50% + ${Math.cos(angle)*speed}px), calc(-50% + ${Math.sin(angle)*speed}px))`;
+        p.style.opacity = '0';
+      });
+      setTimeout(() => p.remove(), 800);
+    }
+  }
+
+  // Ambient floating particles
+  function spawnParticle() {
+    const p  = document.createElement('div');
+    const sz = 2 + Math.random() * 4;
+    const colors = ['#00c8ff','#7800ff','#ff3296','#a78bfa'];
+    p.className = 'particle';
+    p.style.cssText = `
+      width:${sz}px;height:${sz}px;
+      left:${Math.random()*100}%;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      box-shadow:0 0 6px currentColor;
+      --drift:${(Math.random()-0.5)*200};
+      animation-duration:${5 + Math.random()*8}s;
+      animation-delay:${Math.random()*3}s;
+    `;
+    document.getElementById('particles').appendChild(p);
+    p.addEventListener('animationend', () => p.remove());
+  }
+
+  setInterval(spawnParticle, 300);
+
+  // Periodic glitch intervals
+  setInterval(() => {
+    title.classList.remove('glitch');
+    void title.offsetWidth;
+    title.classList.add('glitch');
+  }, 7000);
+</script>
+</body>
+</html>

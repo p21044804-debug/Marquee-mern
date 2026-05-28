@@ -1,0 +1,488 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Creative Job Application | Human-crafted Form</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #e0eafc 0%, #cfdef3 100%);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      padding: 2rem 1.5rem;
+      color: #1f2937;
+    }
+
+    /* main card container – warm, organic feel */
+    .application-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 2rem;
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0,0,0,0.05);
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    /* header section with a subtle hand-drawn vibe */
+    .form-header {
+      background: #1e2b3c;
+      padding: 2rem 2.5rem;
+      border-bottom: 6px solid #f7c35c;
+    }
+
+    .form-header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #f9f3e2;
+      margin-bottom: 0.4rem;
+      font-family: 'Playfair Display', Georgia, serif;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.08);
+    }
+
+    .form-header p {
+      color: #d4e0ec;
+      font-size: 0.95rem;
+      border-left: 3px solid #f7c35c;
+      padding-left: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    /* main form area */
+    form {
+      padding: 2rem 2.2rem 2.5rem 2.2rem;
+      background: #fefefe;
+    }
+
+    /* section styles – subtle dividers */
+    .form-section {
+      margin-bottom: 2.2rem;
+      border-bottom: 1px dashed #dddde0;
+      padding-bottom: 1.8rem;
+    }
+
+    .form-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .section-title {
+      font-size: 1.65rem;
+      font-weight: 600;
+      font-family: 'Playfair Display', Georgia, serif;
+      background: linear-gradient(135deg, #1e2b3c, #2c4b65);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 1.4rem;
+      letter-spacing: -0.2px;
+      display: inline-block;
+      border-left: 5px solid #f7c35c;
+      padding-left: 0.85rem;
+    }
+
+    /* grid layout – responsive & clean */
+    .two-col-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.2rem 1.8rem;
+    }
+
+    .full-width {
+      grid-column: span 2;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    label {
+      font-weight: 500;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: #4b5563;
+    }
+
+    input, select, textarea {
+      font-family: 'Inter', system-ui, sans-serif;
+      padding: 0.75rem 1rem;
+      border: 1px solid #cfdde6;
+      border-radius: 18px;
+      font-size: 0.95rem;
+      background: white;
+      transition: all 0.2s ease;
+      outline: none;
+      width: 100%;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #f7c35c;
+      box-shadow: 0 0 0 3px rgba(247, 195, 92, 0.25);
+    }
+
+    /* checkbox & radio group styling */
+    .radio-group, .check-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      align-items: center;
+      margin-top: 0.3rem;
+    }
+
+    .radio-option, .check-option {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: normal;
+      text-transform: none;
+      letter-spacing: normal;
+      font-size: 0.9rem;
+      background: #f8fafc;
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      border: 1px solid #e2e8f0;
+    }
+
+    input[type="radio"], input[type="checkbox"] {
+      width: 1.1rem;
+      height: 1.1rem;
+      accent-color: #2c4b65;
+      margin: 0;
+    }
+
+    /* inline hint / small text */
+    .hint-text {
+      font-size: 0.7rem;
+      color: #6c757d;
+      margin-top: 0.2rem;
+    }
+
+    /* felony explain text */
+    .conditional-textarea {
+      margin-top: 0.5rem;
+    }
+
+    textarea {
+      border-radius: 18px;
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    hr {
+      margin: 0.8rem 0;
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, #e2e8f0, #f7c35c, #e2e8f0);
+    }
+
+    /* education blocks spacing */
+    .edu-item {
+      background: #fafcff;
+      padding: 1rem 1rem 0.8rem 1rem;
+      border-radius: 24px;
+      margin-bottom: 1.2rem;
+      border: 1px solid #ecf3fa;
+    }
+
+    .edu-header {
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: #1e2b3c;
+      font-size: 1rem;
+      border-left: 4px solid #f7c35c;
+      padding-left: 12px;
+    }
+
+    .subgrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    /* button */
+    .submit-area {
+      margin-top: 2.5rem;
+      text-align: right;
+      background: #fef9ef;
+      padding: 1rem 1.5rem;
+      border-radius: 48px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    button {
+      background: #1e2b3c;
+      border: none;
+      padding: 0.85rem 2.2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      color: white;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    button:hover {
+      background: #f7c35c;
+      color: #1e2b3c;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 20px -12px rgba(0,0,0,0.2);
+    }
+
+    /* simulated human style: hand-inked feel, small details */
+    @media (max-width: 780px) {
+      .two-col-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      .full-width {
+        grid-column: span 1;
+      }
+      form {
+        padding: 1.5rem;
+      }
+      .form-header h1 {
+        font-size: 1.8rem;
+      }
+    }
+
+    /* custom signature for human style */
+    .artisanal-touch {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 0.5rem;
+      font-size: 0.7rem;
+      color: #adbbd0;
+      border-top: 1px solid #eceff5;
+      padding-top: 1rem;
+    }
+
+    /* interactive demo effect, just for fun */
+    .console-message {
+      font-size: 0.75rem;
+      margin-top: 12px;
+      color: #2d6a4f;
+      background: #e9f5e9;
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 60px;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button, 
+    input[type="number"]::-webkit-outer-spin-button {
+      opacity: 0.5;
+    }
+
+    /* SSN & subtle things */
+    .footnote {
+      font-size: 0.7rem;
+      text-align: center;
+      margin-top: 1rem;
+      color: #6d7b8c;
+    }
+  </style>
+</head>
+<body>
+<div class="application-wrapper">
+  <div class="form-header">
+    <h1>✍🏼 JOB APPLICATION FORM</h1>
+    <p>Handcrafted · honest work · tell us your story</p>
+  </div>
+  <form id="creativeJobForm" action="#" method="post">
+    <!-- PERSONAL INFORMATION -->
+    <div class="form-section">
+      <div class="section-title">📋 PERSONAL INFORMATION</div>
+      <div class="two-col-grid">
+        <div class="form-field">
+          <label>Full Name *</label>
+          <input type="text" placeholder="e.g., Taylor R. Chen" id="fullName" required>
+        </div>
+        <div class="form-field">
+          <label>Date of Birth</label>
+          <input type="date" id="dob">
+        </div>
+        <div class="form-field full-width">
+          <label>Address</label>
+          <input type="text" placeholder="Street address" id="address">
+        </div>
+        <div class="form-field">
+          <label>Email Address</label>
+          <input type="email" placeholder="hello@example.com" id="email">
+        </div>
+        <div class="form-field">
+          <label>City, State</label>
+          <input type="text" placeholder="e.g., Austin, TX" id="cityState">
+        </div>
+        <div class="form-field">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="(123) 456-7890" id="phone">
+        </div>
+        <div class="form-field">
+          <label>S.S.N.</label>
+          <input type="text" placeholder="•••-••-••••" id="ssn">
+        </div>
+        <div class="form-field">
+          <label>Position applied for</label>
+          <input type="text" placeholder="Graphic Designer / Barista / etc" id="position">
+        </div>
+        <div class="form-field">
+          <label>Date available</label>
+          <input type="date" id="availableDate">
+        </div>
+        <div class="form-field">
+          <label>Desired Pay</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="payType" value="Hour"> ☐ Hour</label>
+            <label class="radio-option"><input type="radio" name="payType" value="Salary"> ☐ Salary</label>
+          </div>
+        </div>
+        <div class="form-field">
+          <label>Employment desired</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="employmentType" value="Full time"> ☐ Full time</label>
+            <label class="radio-option"><input type="radio" name="employmentType" value="Part time"> ☐ Part time</label>
+            <label class="radio-option"><input type="radio" name="employmentType" value="Seasonal"> ☐ Seasonal</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EMPLOYMENT ELIGIBILITY -->
+    <div class="form-section">
+      <div class="section-title">⚖️ EMPLOYMENT ELIGIBILITY</div>
+      <div class="two-col-grid">
+        <div class="form-field">
+          <label>Legally eligible to work in the U.S.?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="legalEligible" value="Yes"> ☐ Yes</label>
+            <label class="radio-option"><input type="radio" name="legalEligible" value="No"> ☐ No</label>
+          </div>
+        </div>
+        <div class="form-field">
+          <label>Have you ever worked for this employer?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="previousEmployer" value="Yes" id="prevYes"> ☐ Yes</label>
+            <label class="radio-option"><input type="radio" name="previousEmployer" value="No" id="prevNo"> ☐ No</label>
+          </div>
+        </div>
+        <div class="form-field full-width" id="prevDatesField" style="display: none;">
+          <label>If yes, start and end dates:</label>
+          <input type="text" placeholder="e.g., Jun 2020 - Aug 2022" id="prevDates">
+        </div>
+        <div class="form-field">
+          <label>Have you ever been convicted of a felony?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="felony" value="Yes" id="felonyYes"> ☐ Yes</label>
+            <label class="radio-option"><input type="radio" name="felony" value="No" id="felonyNo"> ☐ No</label>
+          </div>
+        </div>
+        <div class="form-field full-width" id="felonyExplainField" style="display: none;">
+          <label>If yes, please explain (context matters)</label>
+          <textarea rows="2" placeholder="Honest explanation, we value transparency..." id="felonyExplanation"></textarea>
+          <div class="hint-text">* Only relevant convictions, records may be considered individually</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDUCATION SECTION – thorough & structured with a human feel -->
+    <div class="form-section">
+      <div class="section-title">🎓 EDUCATION JOURNEY</div>
+      
+      <!-- High School Block -->
+      <div class="edu-item">
+        <div class="edu-header">🏫 High School</div>
+        <div class="subgrid">
+          <div class="form-field"><label>High School Name</label><input type="text" id="highSchoolName" placeholder="Central High"></div>
+          <div class="form-field"><label>City / State</label><input type="text" id="highSchoolCity" placeholder="Springfield, IL"></div>
+          <div class="form-field"><label>From (Year)</label><input type="text" id="highFrom" placeholder="2016"></div>
+          <div class="form-field"><label>To (Year)</label><input type="text" id="highTo" placeholder="2020"></div>
+          <div class="form-field">
+            <label>Graduate?</label>
+            <div class="radio-group" style="gap:0.8rem">
+              <label class="radio-option"><input type="radio" name="highGrad" value="Yes"> ☐ Yes</label>
+              <label class="radio-option"><input type="radio" name="highGrad" value="No"> ☐ No</label>
+            </div>
+          </div>
+          <div class="form-field"><label>Diploma / Notes</label><input type="text" id="highDiploma" placeholder="High School Diploma"></div>
+        </div>
+      </div>
+      
+      <!-- College Block – with graduate checkbox example -->
+      <div class="edu-item">
+        <div class="edu-header">📚 College / University</div>
+        <div class="subgrid">
+          <div class="form-field"><label>College Name</label><input type="text" id="collegeName" placeholder="State University"></div>
+          <div class="form-field"><label>City / State</label><input type="text" id="collegeCity" placeholder="Ann Arbor, MI"></div>
+          <div class="form-field"><label>From (Year)</label><input type="text" id="collegeFrom" placeholder="2020"></div>
+          <div class="form-field"><label>To (Year)</label><input type="text" id="collegeTo" placeholder="2024"></div>
+          <div class="form-field">
+            <label>Graduate?</label>
+            <div class="radio-group">
+              <label class="radio-option"><input type="radio" name="collegeGrad" value="Yes"> ☑ Yes (example checked visually)</label>
+              <label class="radio-option"><input type="radio" name="collegeGrad" value="No"> ☐ No</label>
+            </div>
+          </div>
+          <div class="form-field"><label>Degree / Diploma</label><input type="text" id="collegeDiploma" placeholder="B.A. in Communication"></div>
+        </div>
+      </div>
+      
+      <!-- Other (Vocational / training) -->
+      <div class="edu-item">
+        <div class="edu-header">🛠️ Other / Certification</div>
+        <div class="subgrid">
+          <div class="form-field"><label>Institution / Program</label><input type="text" id="otherName" placeholder="Code Academy, Bootcamp"></div>
+          <div class="form-field"><label>City / State</label><input type="text" id="otherCity" placeholder="Remote / Online"></div>
+          <div class="form-field"><label>From</label><input type="text" id="otherFrom" placeholder="2023"></div>
+          <div class="form-field"><label>To</label><input type="text" id="otherTo" placeholder="2024"></div>
+          <div class="form-field full-width"><label>Degree / Certification</label><input type="text" id="otherDegree" placeholder="Frontend Dev Certificate"></div>
+        </div>
+      </div>
+      
+      <!-- Additional Other (second optional, keeping the template style) -->
+      <div class="edu-item">
+        <div class="edu-header">📜 Additional Certification / Workshop</div>
+        <div class="subgrid">
+          <div class="form-field"><label>Other Institution</label><input type="text" id="otherTwoName" placeholder="Design Institute"></div>
+          <div class="form-field"><label>City / State</label><input type="text" id="otherTwoCity" placeholder="New York, NY"></div>
+          <div class="form-field"><label>From</label><input type="text" id="otherTwoFrom" placeholder="2024"></div>
+          <div class="form-field"><label>To</label><input type="text" id="otherTwoTo" placeholder="2025"></div>
+          <div class="form-field full-width"><label>Degree - Certification</label><input type="text" id="otherTwoDegree" placeholder="UI/UX Advanced"></div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- tiny human touch: additional note area -->
+    <div class="form-section">
+      <div class="section-title">✨ Additional Notes</div>
+      <div class="form-field">
+        <textarea rows="3" placeholder="Anything else you'd like us to know? Portfolio link, references, or a short introduction..." id="extraNotes"></textarea>
+      </div>
+    </div>
+    
+    <!-- submit area with fake confirmation -->
+    <div class="submit-area">
+      <button type="button" id="submitApplicationBtn">✨ Submit application ✨</button>
+    </div>
+    <div id="formFeedback" class="footnote" style="text-align: right; margin-top: 0.5rem;"></div>
+    <div class="artisanal-touch">✍🏼 every form is unique — designed with care</div>
+  </form>
+</div>
+</body>
+</html>

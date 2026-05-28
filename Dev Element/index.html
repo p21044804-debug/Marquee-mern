@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CSS Types in Web Development</title>
+
+    <!-- Internal CSS -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        /* Navbar */
+        nav {
+            background-color: #222;
+            padding: 15px;
+            position: sticky;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            font-size: 18px;
+        }
+
+        nav a:hover {
+            color: yellow;
+        }
+
+        /* Header */
+        .header-container {
+            background-color: #0077ff;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .subtitle {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        /* Main Container */
+        .container {
+            width: 90%;
+            margin: 30px auto;
+        }
+
+        /* Card Design */
+        .card {
+            background-color: white;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            padding: 20px;
+            color: white;
+        }
+
+        .inline {
+            background-color: #ff4d4d;
+        }
+
+        .internal {
+            background-color: #0077ff;
+        }
+
+        .external {
+            background-color: #28a745;
+        }
+
+        .badge {
+            background-color: white;
+            color: black;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .info-box {
+            background-color: #f1f1f1;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 5px solid #0077ff;
+        }
+
+        .code-snippet {
+            background-color: #222;
+            color: #00ff99;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+
+        footer {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navigation Links -->
+    <nav>
+        <a href="#inline-css">Inline CSS</a>
+        <a href="#internal-css">Internal CSS</a>
+        <a href="#external-css">External CSS</a>
+    </nav>
+
+    <!-- Header -->
+    <div class="header-container">
+        <header>
+            <h1>Types of CSS in Web Development</h1>
+            <p class="subtitle">
+                Master the three essential methods of styling web pages
+            </p>
+        </header>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container">
+
+        <!-- Inline CSS Section -->
+        <div class="card" id="inline-css">
+
+            <div class="card-header inline">
+                <h2>Inline CSS</h2>
+                <span class="badge">Most Direct</span>
+            </div>
+
+            <div class="card-body">
+
+                <p>
+                    Inline CSS is applied directly to a specific HTML element
+                    using the style attribute.
+                </p>
+
+                <div class="info-box">
+                    <strong>Where to use:</strong>
+                    Quick styling or testing.
+                </div>
+
+                <div class="info-box">
+                    <strong>How to use:</strong>
+                    Add style attribute inside the tag.
+                </div>
+
+                <div class="code-snippet">
+                    &lt;h1 style="color:red;"&gt;Hello&lt;/h1&gt;
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Internal CSS Section -->
+        <div class="card" id="internal-css">
+
+            <div class="card-header internal">
+                <h2>Internal CSS</h2>
+                <span class="badge">Scoped</span>
+            </div>
+
+            <div class="card-body">
+
+                <p>
+                    Internal CSS is written inside the
+                    &lt;style&gt; tag in the head section.
+                </p>
+
+                <div class="info-box">
+                    <strong>Where to use:</strong>
+                    Single page websites.
+                </div>
+
+                <div class="info-box">
+                    <strong>How to use:</strong>
+                    Write CSS inside &lt;style&gt; tag.
+                </div>
+
+                <div class="code-snippet">
+                    &lt;style&gt;<br>
+                    h1 { color: blue; }<br>
+                    &lt;/style&gt;
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- External CSS Section -->
+        <div class="card" id="external-css">
+
+            <div class="card-header external">
+                <h2>External CSS</h2>
+                <span class="badge">Best Practice</span>
+            </div>
+
+            <div class="card-body">
+
+                <p>
+                    External CSS is stored in a separate file
+                    and linked with HTML.
+                </p>
+
+                <div class="info-box">
+                    <strong>Where to use:</strong>
+                    Large projects and multiple pages.
+                </div>
+
+                <div class="info-box">
+                    <strong>How to use:</strong>
+                    Link CSS file using link tag.
+                </div>
+
+                <div class="code-snippet">
+                    &lt;link rel="stylesheet" href="style.css"&gt;
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 CSS Learning Website</p>
+    </footer>
+
+</body>
+
+</html>
+```

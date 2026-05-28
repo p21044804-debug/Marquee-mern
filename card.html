@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simple Card Design</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 50%, #f3e7ff 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 212, 255, 0.15);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      border: 2px solid rgba(0, 212, 255, 0.3);
+      animation: slideUp 0.6s ease-out;
+    }
+
+    .card:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 212, 255, 0.25);
+      border-color: rgba(0, 212, 255, 0.6);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .card:hover img {
+      transform: scale(1.1);
+    }
+
+    .card-content {
+      padding: 25px;
+    }
+
+    .card-title {
+      margin: 0 0 10px;
+      font-size: 1.5em;
+      background: linear-gradient(135deg, #ff006e 0%, #a300ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+
+    .card-text {
+      font-size: 1em;
+      color: #475569;
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+
+    .button {
+      background: linear-gradient(135deg, #ff006e 0%, #a300ff 100%);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 0, 110, 0.3);
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(255, 0, 110, 0.4);
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Beautiful Landscape" />
+      <div class="card-content">
+        <h2 class="card-title">Beautiful Landscape</h2>
+        <p class="card-text">Explore the wonders of nature with this stunning landscape photograph. Perfect for inspiring your next adventure!</p>
+        <button class="button">Learn More</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1505228395891-9a51e7e86e81?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Ocean Waves" />
+      <div class="card-content">
+        <h2 class="card-title">Ocean Vibes</h2>
+        <p class="card-text">Feel the rhythm of the sea with these captivating ocean waves. A perfect escape for your wandering soul.</p>
+        <button class="button">Discover More</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Mountain View" />
+      <div class="card-content">
+        <h2 class="card-title">Mountain Peak</h2>
+        <p class="card-text">Reach new heights with breathtaking mountain views. Immerse yourself in the beauty of the wilderness.</p>
+        <button class="button">Explore Now</button>
+      </div>
+    </div>
+    
+  </div>
+</body>
+</html>
