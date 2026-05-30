@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Layout Design</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#f4f4f4;
+      padding:15px;
+    }
+
+    .container{
+      width:100%;
+      background:#fff;
+      border:1px solid #ccc;
+      padding:15px;
+    }
+
+    /* Top Navbar */
+    .top-bar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:20px;
+    }
+
+    .left-btns{
+      display:flex;
+      gap:15px;
+    }
+
+    .btn{
+      padding:15px 60px;
+      border-radius:15px;
+      font-size:18px;
+      border:none;
+      cursor:pointer;
+      box-shadow:0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .flipkart{
+      background:#e8da45;
+    }
+
+    .travel{
+      background:#d9d9d9;
+    }
+
+    .location{
+      font-size:20px;
+      font-weight:500;
+    }
+
+    /* Search Area */
+    .search-box{
+      background:#d9d4d4;
+      padding:10px;
+      border-radius:15px;
+      display:flex;
+      gap:15px;
+      margin-bottom:20px;
+    }
+
+    .search1{
+      flex:3;
+      height:45px;
+      background:#a6ead1;
+      border-radius:5px;
+    }
+
+    .search2{
+      flex:1;
+      height:45px;
+      background:#a5db83;
+      border-radius:5px;
+    }
+
+    /* Small Boxes */
+    .box-row{
+      display:grid;
+      grid-template-columns:repeat(14,1fr);
+      gap:5px;
+      margin-bottom:30px;
+    }
+
+    .small-box{
+      height:110px;
+      background:#ddd;
+      border:3px solid #d5ff49;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+      padding-top:10px;
+      font-size:16px;
+    }
+
+    /* Banner Section */
+    .banner-section{
+      background:#d9d4d4;
+      padding:15px;
+      display:grid;
+      grid-template-columns:2fr 2fr 1fr;
+      gap:15px;
+    }
+
+    .banner{
+      height:220px;
+      border-radius:15px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:22px;
+      color:#111;
+    }
+
+    .banner1{
+      background:#8ee8ee;
+    }
+
+    .banner2{
+      background:#c93c45;
+      color:white;
+    }
+
+    .banner3{
+      background:#ecead8;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- Top Section -->
+    <div class="top-bar">
+
+      <div class="left-btns">
+        <button class="btn flipkart">✅ Flipkart</button>
+        <button class="btn travel">✈️ Travel</button>
+      </div>
+
+      <div class="location">
+        📍 Location : Vadodra
+      </div>
+
+    </div>
+
+    <!-- Search Area -->
+    <div class="search-box">
+      <div class="search1"></div>
+      <div class="search2"></div>
+    </div>
+
+    <!-- Small Boxes -->
+    <div class="box-row">
+
+      <div class="small-box">Box 1</div>
+      <div class="small-box">Box 2</div>
+      <div class="small-box">Box 3</div>
+      <div class="small-box">Box 4</div>
+      <div class="small-box">Box 5</div>
+      <div class="small-box">Box 6</div>
+      <div class="small-box">Box 7</div>
+      <div class="small-box">Box 8</div>
+      <div class="small-box">Box 9</div>
+      <div class="small-box">Box 10</div>
+      <div class="small-box">Box 11</div>
+      <div class="small-box">Box 12</div>
+      <div class="small-box">Box 13</div>
+      <div class="small-box">Box 14</div>
+
+    </div>
+
+    <!-- Banner Section -->
+    <div class="banner-section">
+
+      <div class="banner banner1">
+        Ad Banner 1
+      </div>
+
+      <div class="banner banner2">
+        Ad Banner 2
+      </div>
+
+      <div class="banner banner3">
+        Ad Banner 3
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
