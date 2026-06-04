@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #1e2a4a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 200px 270px 270px 200px;
+            grid-template-rows: 200px 160px 160px;
+            gap: 10px;
+        }
+
+        .cell {
+            border-radius: 4px;
+        }
+
+        .green {
+            background: #6ab04c;
+        }
+
+        .red {
+            background: #e55039;
+        }
+
+        .orange {
+            background: #f0a500;
+        }
+
+        .cell-1 {
+            grid-column: 1;
+            grid-row: 1/4;
+        }
+
+        .cell-2 {
+            grid-column: 2/4;
+            grid-row: 1;
+        }
+
+        .cell-3 {
+            grid-column: 4;
+            grid-row: 1;
+        }
+
+        .cell-4 {
+            grid-column: 2;
+            grid-row: 2;
+        }
+
+        .cell-5 {
+            grid-column: 3;
+            grid-row: 2;
+        }
+
+        .cell-6 {
+            grid-column: 4;
+            grid-row: 2/4;
+        }
+
+        .cell-7 {
+            grid-column: 2;
+            grid-row: 3;
+        }
+
+        .cell-8 {
+            grid-column: 3;
+            grid-row: 3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grid-container">
+        <div class="cell green  cell-1"></div>
+        <div class="cell green  cell-2"></div>
+        <div class="cell red    cell-3"></div>
+        <div class="cell orange cell-4"></div>
+        <div class="cell red    cell-5"></div>
+        <div class="cell green  cell-6"></div>
+        <div class="cell red    cell-7"></div>
+        <div class="cell orange cell-8"></div>
+    </div>
+</body>
+
+</html>
