@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Layout Grid</title>
+  <style>
+    :root{
+      --gap:12px;
+      --radius:10px;
+      --header:#f39c12;
+      --sidebar:#e67e22;
+      --content1:#c0392b;
+      --content2:#9b59b6;
+      --content3:#8e44ad;
+      --footer:#f39c12;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:#f4f6f8;padding:24px;display:flex;justify-content:center}
+
+    .grid{
+      width:100%;
+      max-width:1000px;
+      display:grid;
+      grid-template-columns:220px 1fr 1fr;
+      grid-template-rows:80px 1fr 220px 70px;
+      grid-template-areas:
+        "header header header"
+        "sidebar content1 content1"
+        "sidebar content2 content3"
+        "footer footer footer";
+      gap:var(--gap);
+    }
+
+    .box{border-radius:var(--radius);box-shadow:0 10px 20px rgba(16,24,40,0.08)}
+    .header{grid-area:header;background:linear-gradient(135deg,var(--header),#f1c40f)}
+    .sidebar{grid-area:sidebar;background:linear-gradient(135deg,var(--sidebar),#d35400)}
+    .content1{grid-area:content1;background:linear-gradient(135deg,var(--content1),#e74c3c)}
+    .content2{grid-area:content2;background:linear-gradient(135deg,var(--content2),#8e44ad)}
+    .content3{grid-area:content3;background:linear-gradient(135deg,var(--content3),#7d3c98)}
+    .footer{grid-area:footer;background:linear-gradient(135deg,var(--footer),#f1c40f)}
+
+    /* subtle inner padding to make colors sit nicely */
+    .header,.sidebar,.content1,.content2,.content3,.footer{min-height:64px}
+
+    /* Responsive: stack on small screens */
+    @media (max-width:720px){
+      .grid{max-width:640px;grid-template-columns:1fr;grid-template-rows:70px auto auto auto 60px;grid-template-areas:
+        "header"
+        "content1"
+        "content2"
+        "content3"
+        "footer"}
+      .sidebar{display:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <div class="box header"></div>
+    <div class="box sidebar"></div>
+    <div class="box content1"></div>
+    <div class="box content2"></div>
+    <div class="box content3"></div>
+    <div class="box footer"></div>
+  </div>
+</body>
+</html>
